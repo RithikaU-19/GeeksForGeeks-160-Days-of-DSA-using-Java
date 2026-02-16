@@ -1,0 +1,26 @@
+class Solution {
+    public int maxCircularSum(int arr[]) {
+        int n=arr.length;
+        if(n==0){
+            return 0;
+        }
+        int total=arr[0];
+        int curmax=arr[0];
+        int bestmax=arr[0];
+        int curmin=arr[0];
+        int bestmin=arr[0];
+        for(int i=1;i<n;i++){
+            total+=arr[i];
+            curmax=Math.max(arr[i],curmax+arr[i]);
+            bestmax=Math.max(bestmax,curmax);
+            curmin=Math.min(arr[i],curmin+arr[i]);
+            bestmin=Math.min(bestmin,curmin);
+        }
+        if(bestmin==total){
+            return bestmax;
+        }
+        int circular=total-bestmin;
+        return Math.max(bestmax,circular);
+        
+    }
+}
