@@ -1,0 +1,19 @@
+class Solution {
+    public ArrayList<int[]> mergeOverlap(int[][] arr) {
+        Arrays.sort(arr,(a,b)->a[0]-b[0]);
+        int index=0;
+        ArrayList<int[]> reslist=new ArrayList<>();
+        while(index<arr.length){
+            int newstart=arr[index][0];
+            int curend=arr[index][1];
+            while(index<arr.length-1&&curend>=arr[index+1][0]){
+                curend=Math.max(curend,arr[index+1][1]);
+                index+=1;
+            }
+            int newend=curend;
+            reslist.add(new int[]{newstart,newend});
+            index++;
+        }
+        return reslist;
+    }
+}
