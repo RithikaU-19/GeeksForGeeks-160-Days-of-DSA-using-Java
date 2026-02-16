@@ -1,0 +1,49 @@
+class Solution{
+    static class manacher{
+        int[] p;
+        String ms;
+        manacher(String s){
+            StringBuilder sb=new StringBuilder("@");
+            for(char c : s.toCharArray()){
+                sb.append("#").append(c);
+            }
+            sb.append("#$");
+            ms=sb.toString();
+            runManacher();
+        }
+        void runManacher(){
+            int n=ms.length();
+            p=new int[n];
+            int l = 0,r=0;
+            for(int i=1;i<n-1;i++){
+                if(i<r)
+                p[i]=Math.min(r-i,p[r+l-i]);
+                while(ms.charAt(i+1+p[i])==ms.charAt(i-1-p[i]))
+                p[i]++;
+                if(i+p[i]>r){
+                    l=i-p[i];
+                    r=i+p[i];
+                }
+            }
+        }
+        int getLongest(int cen, int odd){
+            int pos=2*cen+2+(odd==0?1:0);
+            return p[pos];
+        }
+        boolean check(int l,int r){
+            int len=r-l+1;
+            int longest=getLongest((l+r)/2,len%2);
+            return len<=longest;
+        }
+    }
+    static int minChar(String s){
+        int n=s.length();
+        manacher m= new manacher(s);
+        for(int i=n-1;i>=0;--i){
+            if(m.check(0,i))
+            return n-(i+1);
+        }
+        return n-1;
+    }
+    
+}
