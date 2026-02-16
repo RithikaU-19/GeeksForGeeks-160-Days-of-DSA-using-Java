@@ -1,0 +1,22 @@
+class Solution {
+    public char nonRepeatingChar(String s) {
+        final int MAX_CHAR=26;
+        int visitedarray[]=new int[MAX_CHAR];
+        Arrays.fill(visitedarray,-1);
+        for(int i=0;i<s.length();i++){
+            int b=s.charAt(i)-'a';
+            if(visitedarray[b]==-1){
+                visitedarray[b]=i;
+            }else{
+                visitedarray[b]=-2;
+            }
+        }
+        for(int i=0;i<s.length();i++){
+            int index=s.charAt(i)-'a';
+            if(visitedarray[index]>=0){
+                return s.charAt(i);
+            }
+        }
+        return '$';
+    }
+}
